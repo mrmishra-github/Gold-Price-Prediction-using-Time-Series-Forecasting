@@ -1,0 +1,65 @@
+
+1. Flow Diagram (Pipeline Architecture)
+
+```text
+┌─────────────────────────────┐
+│     Gold Price Dataset      │
+│  (CSV from Kaggle source)   │
+└──────────────┬──────────────┘
+               │
+               ▼
+┌─────────────────────────────┐
+│     Data Cleaning & EDA     │
+│ - Date parsing              │
+│ - Missing value handling   │
+│ - Price normalization      │
+│ - Outlier detection        │
+│ - Trend & seasonality      │
+└──────────────┬──────────────┘
+               │
+               ▼
+┌─────────────────────────────┐
+│     Feature Engineering     │
+│ - Lag features (1,7,30)     │
+│ - Rolling mean/std          │
+│ - Scaling (DL models)       │
+└──────────────┬──────────────┘
+               │
+               ▼
+┌─────────────────────────────┐
+│     Train / Test Split      │
+│          (80 / 20)          │
+└──────────────┬──────────────┘
+               │
+               ▼
+┌────────────────────────────────────────────────────┐
+│                 Model Training                     │
+│ ┌─────────┐ ┌────────┐ ┌─────────┐ ┌──────────┐ │
+│ │ Prophet │ │ SARIMA │ │ XGBoost │ │   LSTM   │ │
+│ └─────────┘ └────────┘ └─────────┘ └──────────┘ │
+│ ┌─────────┐ ┌──────────────────────────────────┐ │
+│ │   GRU   │ │          Transformer              │ │
+│ └─────────┘ └──────────────────────────────────┘ │
+└──────────────┬────────────────────────────────────┘
+               │
+               ▼
+┌─────────────────────────────┐
+│     Model Evaluation        │
+│ - MAE                       │
+│ - RMSE                      │
+│ - MAPE                      │
+│ - Accuracy                  │
+└──────────────┬──────────────┘
+               │
+               ▼
+┌─────────────────────────────┐
+│     Model Comparison        │
+│ - Lowest MAPE selection     │
+└──────────────┬──────────────┘
+               │
+               ▼
+┌─────────────────────────────┐
+│   Visualization & Results  │
+│ - Actual vs Predicted       │
+│ - Scatter accuracy plot     │
+└─────────────────────────────┘
